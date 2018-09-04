@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import rs.contactlistspringmvc.model.Contact;
 
 /**
@@ -90,6 +91,46 @@ public class ContactListInMemImpl implements ContactListDao{
             firstNameMatchPredicate =
                     (c) -> c.getFirstName().equalsIgnoreCase(firstNameSearchCriteria);
         }
+        if(lastNameSearchCriteria == null ||
+                lastNameSearchCriteria.isEmpty()){
+            lastNameMatchPredicate = truePredicate;
+        } else {
+            lastNameMatchPredicate =
+                    (c) -> c.getLastName().equalsIgnoreCase(lastNameSearchCriteria);
+        }
+        if (companySearchCriteria == null
+                || companySearchCriteria.isEmpty()) {
+            companyMatchPredicate = truePredicate;
+        } else {
+            companyMatchPredicate
+                    = (c) -> c.getCompany().equalsIgnoreCase(companySearchCriteria);
+        }
+        if (phoneSearchCriteria == null
+                || phoneSearchCriteria.isEmpty()) {
+            phoneMatchPredicate = truePredicate;
+        } else {
+            phoneMatchPredicate
+                    =    (c) -> c.getPhone().equalsIgnoreCase(phoneSearchCriteria);
+        }
+        if (emailSearchCriteria == null
+                || emailSearchCriteria.isEmpty()) {
+            emailMatchPredicate = truePredicate;
+        } else {
+            emailMatchPredicate
+                    = (c) -> c.getEmail().equalsIgnoreCase(emailSearchCriteria);
+        }
+       
+        // returns the list of contacts that match the given criteria
+        
+        return contactMap.values().stream()
+                .filter(firstNameMatchPredicate
+                        .and(lastNameMatchPredicate)
+                        .and(companyMatchPredicate)
+                        .and(phoneMatchPredicate)
+                        .and(emailMatchPredicate))
+                
+                .collect(Collectors.toList());
+    
     }
     
 }

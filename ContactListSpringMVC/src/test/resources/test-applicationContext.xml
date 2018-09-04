@@ -16,4 +16,7 @@
 
     <!-- Bean definitions go here -->
     
+    <bean id="ContactListDao"
+      class="rs.contactlistspringmvc.dao.ContactListInMemImpl"/>
+    
 </beans>

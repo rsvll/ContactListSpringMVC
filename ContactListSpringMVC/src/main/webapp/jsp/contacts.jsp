@@ -42,6 +42,91 @@
             </div>
             <!-- Main Page Content Start -->
             
+            <!-- 
+    Add a row to our container - this will hold the summary table and the new
+    contact form.
+-->
+<div class="row">
+    <!-- 
+        Add a col to hold the summary table - have it take up half the row 
+    -->
+    <div class="col-md-6">
+        <h2>My Contacts</h2>
+       <table id="contactTable" class="table table-hover">
+    <tr>
+        <th width="40%">Contact Name</th>
+        <th width="30%">Company</th>
+        <th width="15%"></th>
+        <th width="15%"></th>
+    </tr>
+    <c:forEach var="currentContact" items="${contactList}">
+        <tr>
+            <td>
+             <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+            </td>
+            <td>
+                <c:out value="${currentContact.company}"/>
+            </td>
+            <td>
+                Edit
+            </td>
+            <td>
+                Delete
+            </td>
+        </tr>
+    </c:forEach>
+</table>            
+    </div> <!-- End col div -->
+    <!-- 
+        Add col to hold the new contact form - have it take up the other 
+        half of the row
+    -->
+    <div class="col-md-6">
+        <h2>Add New Contact</h2>
+        <form class="form-horizontal" 
+              role="form" method="POST" 
+              action="createContact">
+            <div class="form-group">
+                <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="add-last-name" class="col-md-4 control-label">Last Name:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="add-company" class="col-md-4 control-label">Company:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="company" placeholder="Company"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="add-email" class="col-md-4 control-label">Email:</label>
+                <div class="col-md-8">
+                    <input type="email" class="form-control" name="email" placeholder="Email"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="add-phone" class="col-md-4 control-label">Phone:</label>
+                <div class="col-md-8">
+                    <input type="tel" class="form-control" name="phone" placeholder="Phone"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" class="btn btn-default" value="Create Contact"/>
+                </div>
+            </div>
+        </form>
+
+    </div> <!-- End col div -->
+
+</div> <!-- End row div -->
+            
             <!-- Main Page Content Stop -->    
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
