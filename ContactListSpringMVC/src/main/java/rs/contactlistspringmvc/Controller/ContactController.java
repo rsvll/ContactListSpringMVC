@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import rs.contactlistspringmvc.dao.ContactListDao;
@@ -59,4 +60,46 @@ public class ContactController {
         return "redirect:displayContactsPage";
         
     }
+    
+    @RequestMapping(value = "/displayContactDetails", method = RequestMethod.GET)
+    public String displayContactDetails(HttpServletRequest request, Model model){
+        String contactIdParameter = request.getParameter("contactId");
+        int contactId = Integer.parseInt(contactIdParameter);
+        
+        Contact contact = dao.getContactById(contactId);
+        
+        model.addAttribute("contact", contact);
+        
+        return "contactDetails";
+    }
+    
+    @RequestMapping(value = "/deleteContact" , method = RequestMethod.GET)
+    public String deleteContact(HttpServletRequest request, Model model){
+        String contactIdParameter = request.getParameter("contactId");
+        long contactId = Long.parseLong(contactIdParameter);
+        dao.removeContact(contactId);
+        return "redirect:displayContactsPage";
+    }
+    
+    @RequestMapping(value = "/displayEditContactForm", method = RequestMethod.GET)
+    public String displayEditContactForm(HttpServletRequest request, Model model){
+        String contactIdParameter = request.getParameter("contactId");
+        long contactId = Long.parseLong(contactIdParameter);
+        
+        
+        Contact contact = dao.getContactById(contactId);
+        model.addAttribute("contact", contact);
+        return "editContactForm";
+    }
+
+    // end point for edit
+    @RequestMapping(value = "/editContact", method = RequestMethod.POST)
+    public String editContact(@ModelAttribute("contact") Contact contact) {
+
+        dao.updateContact(contact);
+
+        return "redirect:displayContactsPage";
+    }
+
+
 }

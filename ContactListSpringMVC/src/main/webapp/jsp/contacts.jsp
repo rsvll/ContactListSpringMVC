@@ -62,16 +62,23 @@
     <c:forEach var="currentContact" items="${contactList}">
         <tr>
             <td>
-             <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+                <a href="displayContactDetails?contactId=${currentContact.contactId}">   
+                    <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+                </a>
             </td>
             <td>
                 <c:out value="${currentContact.company}"/>
             </td>
             <td>
-                Edit
+                <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+                    Edit
+                </a>    
             </td>
             <td>
-                Delete
+                <a href="deleteContact?contactId=${currentContact.contactId}">
+                    Delete    
+                </a>
+                
             </td>
         </tr>
     </c:forEach>
